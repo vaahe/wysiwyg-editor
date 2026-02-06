@@ -1,0 +1,20 @@
+{
+  "name": "wysiwyg-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "editor:dev": "pnpm -C packages/editor dev",
+    "web:dev": "pnpm -C apps/web dev",
+    "web:build": "pnpm -C apps/web build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.28.2",
+  "devDependencies": {
+    "turbo": "^2.8.3",
+    "typescript": "^5.9.3"
+  }
+}

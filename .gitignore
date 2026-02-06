@@ -1,0 +1,26 @@
+# node
+node_modules
+.pnpm-store
+.pnpm-debug.log
+
+# build outputs
+dist
+.next
+out
+
+# env
+.env
+.env.*
+
+# logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# turbo
+.turbo
+
+# misc
+coverage
