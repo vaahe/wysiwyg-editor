@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "editor:dev": "pnpm -C packages/editor dev",
     "web:dev": "pnpm -C apps/web dev",
-    "web:build": "pnpm -C apps/web build"
+    "web:build": "pnpm -C apps/web build",
+    "typecheck": "tsc -b",
+    "typecheck:watch": "tsc -b -w",
+    "clean:ts": "tsc -b --clean"
   },
   "keywords": [],
   "author": "",
