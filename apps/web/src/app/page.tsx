@@ -1,6 +1,6 @@
 'use client';
 
-import { Toolbar, type EditorAdapter } from "@vabanik/editor";
+import { EditorProvider, Toolbar, type EditorAdapter } from "@vabanik/editor";
 
 const fakeEditor: EditorAdapter = {
   isActiveMark: () => false,
@@ -13,9 +13,13 @@ const fakeEditor: EditorAdapter = {
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Toolbar editor={fakeEditor} />
-      <div style={{ marginTop: 16, padding: 12, border: "1px solid #ddd", borderRadius: 12 }}>
-        Editor area placeholder
+      <div style={{ display: "grid", gap: 16 }}>
+        <EditorProvider editor={fakeEditor}>
+          <Toolbar />
+        </EditorProvider>
+        <div style={{ padding: 12, border: "1px solid #ddd", borderRadius: 12 }}>
+          Editor area placeholder
+        </div>
       </div>
     </div>
   );

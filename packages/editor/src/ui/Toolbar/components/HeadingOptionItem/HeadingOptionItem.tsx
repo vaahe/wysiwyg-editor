@@ -8,7 +8,6 @@ type Props = {
 
 export const HeadingOptionItem: FC<Props> = ({ option, onSelect }) => {
   const Tag = option.value === "p" ? "p" : option.value;
-  console.log(Tag);
   const handleClick = () => onSelect(option.value);
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => e.preventDefault();
 

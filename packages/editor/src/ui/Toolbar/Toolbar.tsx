@@ -1,30 +1,24 @@
-import type { Command, EditorAdapter, Mark, Block } from "../../types";
+import { createEditorContextValue, useOptionalEditorContext } from "../../lib";
+import type { EditorAdapter } from "../../types";
 import { ToolbarButton } from "../common/ToolbarButton/ToolbarButton";
 import { HeadingsDropdown } from "./components";
 
 type ToolbarProps = {
-  editor: EditorAdapter | null;
+  editor?: EditorAdapter | null;
   className?: string;
 };
 
 export function Toolbar({ editor, className }: ToolbarProps) {
-  const exec = (cmd: Command) => {
-    if (!editor) return;
-    editor.focus();
-    editor.execute(cmd);
-  };
-
-  const can = (cmd: Command) => (editor ? editor.canExecute(cmd) : false);
-
-  const activeMark = (m: Mark) => (editor ? editor.isActiveMark(m) : false);
-  const activeBlock = (b: Block) => (editor ? editor.isActiveBlock(b) : false);
+  const context = useOptionalEditorContext();
+  const editorState = editor !== undefined ? createEditorContextValue(editor) : context ?? createEditorContextValue(null);
+  const { exec, can, activeMark, activeBlock } = editorState;
 
   return (
     <div
       className={className}
       style={{ display: "flex", gap: 8, flexWrap: "wrap", padding: 8, border: "1px solid #e5e5e5", borderRadius: 12 }}
     >
-      <HeadingsDropdown />
+      <HeadingsDropdown editor={editorState.editor} />
       <ToolbarButton
         label="B"
         active={activeMark("bold")}
