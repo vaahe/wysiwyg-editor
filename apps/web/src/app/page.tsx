@@ -1,13 +1,19 @@
 'use client';
 
-import { EditorProvider, Toolbar, type EditorAdapter } from "@vabanik/editor";
+import { EditorProvider, Toolbar, type EditorAdapter } from "@vabster/editor";
 
 const fakeEditor: EditorAdapter = {
-  isActiveMark: () => false,
-  isActiveBlock: (b) => b === "paragraph",
-  canExecute: () => true,
-  execute: (cmd) => console.log("exec", cmd),
-  focus: () => console.log("focus")
+  focus: () => console.log("focus"),
+  execute: (command) => console.log("exec", command),
+  getSnapshot: () => ({
+    activeMarks: [],
+    activeBlock: "paragraph",
+    canToggleMarks: ["bold", "italic", "underline", "strike", "code", "link"],
+    canSetBlocks: ["paragraph", "heading1", "heading2", "bulletList", "orderedList", "blockquote"],
+    canUndo: true,
+    canRedo: true,
+  }),
+  subscribe: () => () => undefined,
 };
 
 export default function Home() {
