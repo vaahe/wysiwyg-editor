@@ -6,7 +6,7 @@ export type Mark =
   | "code"
   | "link";
 
-export type Block = "paragraph" | "heading1" | "heading2" | "bulletList" | "orderedList" | "blockquote";
+export type Block = "paragraph" | "heading1" | "heading2" | "heading3" | "heading4" | "heading5" | "heading6" | "bulletList" | "orderedList" | "blockquote";
 
 export type Command =
   | { type: "toggleMark"; mark: Mark }
@@ -14,10 +14,18 @@ export type Command =
   | { type: "undo" }
   | { type: "redo" };
 
+export type EditorSnapshot = {
+  activeMarks: Mark[];
+  activeBlock: Block | null;
+  canToggleMarks: Mark[];
+  canSetBlocks: Block[];
+  canUndo: boolean;
+  canRedo: boolean;
+};
+
 export interface EditorAdapter {
-  isActiveMark(mark: Mark): boolean;
-  isActiveBlock(block: Block): boolean;
-  canExecute(cmd: Command): boolean;
-  execute(cmd: Command): void;
   focus(): void;
+  execute(command: Command): void;
+  getSnapshot(): EditorSnapshot;
+  subscribe(listener: () => void): () => void;
 }
