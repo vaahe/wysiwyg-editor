@@ -1,8 +1,8 @@
-import { type FC, useEffect, useRef, useState } from "react";
-import { createEditorContextValue, useOptionalEditorContext } from "../../../../lib";
+import { type FC, useState } from "react";
+import { useEditorContext } from "../../../../lib";
 import { HeadingOptionList } from "../HeadingOptionList";
 import { BubbleMenu } from "../../../BubbleMenu";
-import type { EditorAdapter } from "../../../../types";
+import type { Block } from "../../../../types";
 
 export type HeadingValue = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
 
@@ -15,61 +15,47 @@ const headingOptions: HeadingOption[] = [
   { value: "p", label: "Paragraph" },
   { value: "h1", label: "Heading 1" },
   { value: "h2", label: "Heading 2" },
+  { value: 'h3', label: "Heading 3" },
+  { value: 'h4', label: "Heading 4" },
+  { value: "h5", label: "Heading 5" },
+  { value: "h6", label: "Heading 6" },
 ];
 
 type Props = {
-  editor?: EditorAdapter | null;
-  value?: HeadingValue;
-  defaultValue?: HeadingValue;
   onChange?: (v: HeadingValue) => void;
   options?: HeadingOption[];
 };
 
-const resolveHeadingValue = (editor: EditorAdapter | null) => {
-  if (!editor) return null;
-  if (editor.isActiveBlock("heading1")) return "h1";
-  if (editor.isActiveBlock("heading2")) return "h2";
-  if (editor.isActiveBlock("paragraph")) return "p";
-
-  return null;
+const headingValueByBlock: Partial<Record<Block, HeadingValue>> = {
+  paragraph: "p",
+  heading1: "h1",
+  heading2: "h2",
+  heading3: "h3",
+  heading4: "h4",
+  heading5: "h5",
+  heading6: "h6",
 };
 
-export const HeadingsDropdown: FC<Props> = ({
-  editor,
-  value,
-  onChange,
-  defaultValue = "h1",
-  options = headingOptions,
-}) => {
-  const context = useOptionalEditorContext();
-  const editorState = editor !== undefined ? createEditorContextValue(editor) : context ?? createEditorContextValue(null);
-  const isControlled = value !== undefined;
-  const [internal, setInternal] = useState<HeadingValue>(defaultValue);
-  const current = value ?? resolveHeadingValue(editorState.editor) ?? internal;
+export const HeadingsDropdown: FC<Props> = ({ onChange, options = headingOptions }) => {
+  const { exec, snapshot } = useEditorContext();
+  const current = snapshot.activeBlock ? headingValueByBlock[snapshot.activeBlock] ?? "p" : "p";
 
   const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const close = (e: MouseEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
-    };
-
-    document.addEventListener("mousedown", close);
-    return () => document.removeEventListener("mousedown", close);
-  }, []);
 
   const handleSelect = (v: HeadingValue) => {
-    if (!isControlled) setInternal(v);
-    if (v === "p") editorState.exec({ type: "setBlock", block: "paragraph" });
-    if (v === "h1") editorState.exec({ type: "setBlock", block: "heading1" });
-    if (v === "h2") editorState.exec({ type: "setBlock", block: "heading2" });
+    if (v === "p") exec({ type: "setBlock", block: "paragraph" });
+    if (v === "h1") exec({ type: "setBlock", block: "heading1" });
+    if (v === "h2") exec({ type: "setBlock", block: "heading2" });
+    if (v === "h3") exec({ type: "setBlock", block: "heading3" });
+    if (v === "h4") exec({ type: "setBlock", block: "heading4" });
+    if (v === "h5") exec({ type: "setBlock", block: "heading5" });
+    if (v === "h6") exec({ type: "setBlock", block: "heading6" });
     onChange?.(v);
     setOpen(false);
   };
 
   return (
-    <div ref={rootRef} style={{ position: "relative" }}>
+    <div style={{ position: "relative" }}>
       <button
         type="button"
         onMouseDown={(e) => e.preventDefault()}
