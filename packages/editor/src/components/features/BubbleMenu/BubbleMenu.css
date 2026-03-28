@@ -1,0 +1,15 @@
+.vb-bubble-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+
+  min-width: 180px;
+  padding: 6px;
+  border-radius: 10px;
+
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  z-index: 100;
+}

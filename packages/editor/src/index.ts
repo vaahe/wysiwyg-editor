@@ -1,3 +1,3 @@
-export * from './types';
-export * from './ui';
-export * from './lib';
+export * from "./core";
+export * from "./components";
+export * from "./react-bindings";
