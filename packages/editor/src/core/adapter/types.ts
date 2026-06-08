@@ -1,23 +1,27 @@
-export type Align = "left" | "center" | "right" | "justify";
+export type Align = 'left' | 'center' | 'right' | 'justify';
 
-export type Mark =
-  | "bold"
-  | "italic"
-  | "underline"
-  | "strike"
-  | "code"
-  | "link";
+export type Mark = 'bold' | 'italic' | 'underline' | 'strike' | 'code' | 'link';
 
-export type Block = "paragraph" | "heading1" | "heading2" | "heading3" | "heading4" | "heading5" | "heading6" | "bulletList" | "orderedList" | "blockquote";
+export type Block =
+  | 'paragraph'
+  | 'heading1'
+  | 'heading2'
+  | 'heading3'
+  | 'heading4'
+  | 'heading5'
+  | 'heading6'
+  | 'bulletList'
+  | 'orderedList'
+  | 'blockquote';
 
 export type Command =
-  | { type: "toggleMark"; mark: Mark }
-  | { type: "setBlock"; block: Block }
-  | { type: "insertImage"; src: string; alt?: string }
-  | { type: "insertFile"; url: string; name: string; size: number }
-  | { type: "setAlign"; align: Align }
-  | { type: "undo" }
-  | { type: "redo" };
+  | { type: 'toggleMark'; mark: Mark }
+  | { type: 'setBlock'; block: Block }
+  | { type: 'insertImage'; src: string; alt?: string }
+  | { type: 'insertFile'; url: string; name: string; size: number }
+  | { type: 'setAlign'; align: Align }
+  | { type: 'undo' }
+  | { type: 'redo' };
 
 export type EditorSnapshot = {
   activeMarks: Mark[];

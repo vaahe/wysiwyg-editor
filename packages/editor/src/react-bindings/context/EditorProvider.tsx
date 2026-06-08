@@ -6,8 +6,8 @@ import {
   useRef,
   useSyncExternalStore,
   type ReactNode,
-} from "react";
-import type { Align, Block, Command, EditorAdapter, EditorSnapshot, Mark } from "../../core";
+} from 'react';
+import type { Align, Block, Command, EditorAdapter, EditorSnapshot, Mark } from '../../core';
 
 export type EditorContextValue = {
   editor: EditorAdapter | null;
@@ -24,7 +24,7 @@ const EditorContext = createContext<EditorContextValue | null>(null);
 const EMPTY_SNAPSHOT: EditorSnapshot = {
   activeMarks: [],
   activeBlock: null,
-  activeAlign: "left",
+  activeAlign: 'left',
   canToggleMarks: [],
   canSetBlocks: [],
   canUndo: false,
@@ -32,15 +32,15 @@ const EMPTY_SNAPSHOT: EditorSnapshot = {
 };
 
 function canExecute(snapshot: EditorSnapshot, command: Command) {
-  if (command.type === "toggleMark") {
+  if (command.type === 'toggleMark') {
     return snapshot.canToggleMarks.includes(command.mark);
   }
 
-  if (command.type === "setBlock") {
+  if (command.type === 'setBlock') {
     return snapshot.canSetBlocks.includes(command.block);
   }
 
-  if (command.type === "undo") {
+  if (command.type === 'undo') {
     return snapshot.canUndo;
   }
 
@@ -128,7 +128,7 @@ export function useEditorContext() {
   const context = useOptionalEditorContext();
 
   if (!context) {
-    throw new Error("useEditorContext must be used within an EditorProvider.");
+    throw new Error('useEditorContext must be used within an EditorProvider.');
   }
 
   return context;

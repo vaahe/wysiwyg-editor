@@ -1,6 +1,6 @@
-import type { FC } from "react";
-import { HeadingOptionItem } from "../HeadingOptionItem";
-import type { HeadingOption, HeadingValue } from "../HeadingDropdown";
+import type { FC } from 'react';
+import { HeadingOptionItem } from '../HeadingOptionItem';
+import type { HeadingOption, HeadingValue } from '../HeadingDropdown';
 
 type Props = {
   options: HeadingOption[];

@@ -1,6 +1,6 @@
-import { useRef, type FC } from "react";
-import { useEditorContext } from "../../../../../react-bindings";
-import { ToolbarButton } from "../../../../primitives/ToolbarButton/ToolbarButton";
+import { useRef, type FC } from 'react';
+import { useEditorContext } from '../../../../../react-bindings';
+import { ToolbarButton } from '../../../../primitives/ToolbarButton/ToolbarButton';
 
 export const InsertImageButton: FC = () => {
   const { exec, snapshot } = useEditorContext();
@@ -17,10 +17,10 @@ export const InsertImageButton: FC = () => {
 
     const reader = new FileReader();
     reader.onload = () => {
-      exec({ type: "insertImage", src: reader.result as string, alt: file.name });
+      exec({ type: 'insertImage', src: reader.result as string, alt: file.name });
     };
     reader.readAsDataURL(file);
-    e.target.value = "";
+    e.target.value = '';
   };
 
   return (
@@ -35,7 +35,7 @@ export const InsertImageButton: FC = () => {
         ref={inputRef}
         type="file"
         accept="image/*"
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
         onChange={handleChange}
       />
     </>

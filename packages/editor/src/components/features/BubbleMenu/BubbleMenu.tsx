@@ -1,11 +1,11 @@
-import { useRef, type FC, type ReactNode } from "react";
-import { useHandleClickOutside } from "../../../react-bindings";
+import { useRef, type FC, type ReactNode } from 'react';
+import { useHandleClickOutside } from '../../../react-bindings';
 
 type Props = {
   open?: boolean;
   onClose?: () => void;
   children: ReactNode;
-}
+};
 
 export const BubbleMenu: FC<Props> = ({ open, onClose, children }) => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -15,8 +15,8 @@ export const BubbleMenu: FC<Props> = ({ open, onClose, children }) => {
   if (!open) return null;
 
   return (
-    <div ref={ref} className={"vb-bubble-menu"}>
+    <div ref={ref} className={'vb-bubble-menu'}>
       {children}
     </div>
   );
-}
+};

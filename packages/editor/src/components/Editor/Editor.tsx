@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { NativeAdapter } from "../../core/NativeAdapter";
-import { EditorProvider } from "../../react-bindings";
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { NativeAdapter } from '../../core/NativeAdapter';
+import { EditorProvider } from '../../react-bindings';
 
 type EditorProps = {
   className?: string;
@@ -22,14 +22,14 @@ export function Editor({ className, defaultValue, placeholder, children }: Edito
 
   return (
     <EditorProvider editor={adapter}>
-      <div className={`vb-editor${className ? ` ${className}` : ""}`}>
+      <div className={`vb-editor${className ? ` ${className}` : ''}`}>
         {children}
         <div
           ref={elRef}
           contentEditable
           suppressContentEditableWarning
           className="vb-editor-content"
-          data-placeholder={placeholder ?? "Start writing…"}
+          data-placeholder={placeholder ?? 'Start writing…'}
           dangerouslySetInnerHTML={defaultValue ? { __html: defaultValue } : undefined}
         />
       </div>

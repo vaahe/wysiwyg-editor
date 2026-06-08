@@ -1,16 +1,16 @@
-import { CssUtils } from "../../../utils";
-import type { ButtonHTMLAttributes, FC, MouseEvent } from "react";
+import { CssUtils } from '../../../utils';
+import type { ButtonHTMLAttributes, FC, MouseEvent } from 'react';
 
 interface ToolbarButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   active?: boolean;
-};
+}
 
 export const ToolbarButton: FC<ToolbarButtonProps> = (props) => {
   const btnClasses = CssUtils.setClasses([
-    "vb-toolbar-btn",
-    props.active && "is-active",
-    props.disabled && "is-disabled",
+    'vb-toolbar-btn',
+    props.active && 'is-active',
+    props.disabled && 'is-disabled',
   ]);
 
   const handleMouseDown = (e: MouseEvent<HTMLButtonElement>) => {

@@ -1,23 +1,23 @@
-import type { Align, Block, Command, EditorAdapter, EditorSnapshot, Mark } from "./adapter/types";
+import type { Align, Block, Command, EditorAdapter, EditorSnapshot, Mark } from './adapter/types';
 
 const BLOCK_TAG: Record<Block, string> = {
-  paragraph: "p",
-  heading1: "h1",
-  heading2: "h2",
-  heading3: "h3",
-  heading4: "h4",
-  heading5: "h5",
-  heading6: "h6",
-  bulletList: "ul",
-  orderedList: "ol",
-  blockquote: "blockquote",
+  paragraph: 'p',
+  heading1: 'h1',
+  heading2: 'h2',
+  heading3: 'h3',
+  heading4: 'h4',
+  heading5: 'h5',
+  heading6: 'h6',
+  bulletList: 'ul',
+  orderedList: 'ol',
+  blockquote: 'blockquote',
 };
 
 const TAG_TO_BLOCK: Record<string, Block> = Object.fromEntries(
-  Object.entries(BLOCK_TAG).map(([block, tag]) => [tag, block as Block])
+  Object.entries(BLOCK_TAG).map(([block, tag]) => [tag, block as Block]),
 );
 
-const ALL_MARKS: Mark[] = ["bold", "italic", "underline", "strike", "code", "link"];
+const ALL_MARKS: Mark[] = ['bold', 'italic', 'underline', 'strike', 'code', 'link'];
 const ALL_BLOCKS: Block[] = Object.keys(BLOCK_TAG) as Block[];
 
 export class NativeAdapter implements EditorAdapter {
@@ -29,17 +29,17 @@ export class NativeAdapter implements EditorAdapter {
   constructor(el: HTMLElement) {
     this.el = el;
     this.snapshot = this.buildSnapshot();
-    this.el.addEventListener("input", this.scheduleUpdate);
-    this.el.addEventListener("keyup", this.scheduleUpdate);
-    this.el.addEventListener("mouseup", this.scheduleUpdate);
-    document.addEventListener("selectionchange", this.scheduleUpdate);
+    this.el.addEventListener('input', this.scheduleUpdate);
+    this.el.addEventListener('keyup', this.scheduleUpdate);
+    this.el.addEventListener('mouseup', this.scheduleUpdate);
+    document.addEventListener('selectionchange', this.scheduleUpdate);
   }
 
   destroy() {
-    this.el.removeEventListener("input", this.scheduleUpdate);
-    this.el.removeEventListener("keyup", this.scheduleUpdate);
-    this.el.removeEventListener("mouseup", this.scheduleUpdate);
-    document.removeEventListener("selectionchange", this.scheduleUpdate);
+    this.el.removeEventListener('input', this.scheduleUpdate);
+    this.el.removeEventListener('keyup', this.scheduleUpdate);
+    this.el.removeEventListener('mouseup', this.scheduleUpdate);
+    document.removeEventListener('selectionchange', this.scheduleUpdate);
     if (this.rafId !== null) cancelAnimationFrame(this.rafId);
     this.listeners.clear();
   }
@@ -61,26 +61,26 @@ export class NativeAdapter implements EditorAdapter {
     this.el.focus();
 
     switch (command.type) {
-      case "toggleMark":
+      case 'toggleMark':
         this.toggleMark(command.mark);
         break;
-      case "setBlock":
+      case 'setBlock':
         this.setBlock(command.block);
         break;
-      case "insertImage":
+      case 'insertImage':
         this.insertImage(command.src, command.alt);
         break;
-      case "insertFile":
+      case 'insertFile':
         this.insertFile(command.url, command.name, command.size);
         break;
-      case "setAlign":
+      case 'setAlign':
         this.setAlign(command.align);
         break;
-      case "undo":
-        document.execCommand("undo");
+      case 'undo':
+        document.execCommand('undo');
         break;
-      case "redo":
-        document.execCommand("redo");
+      case 'redo':
+        document.execCommand('redo');
         break;
     }
 
@@ -103,22 +103,22 @@ export class NativeAdapter implements EditorAdapter {
 
   private toggleMark(mark: Mark): void {
     switch (mark) {
-      case "bold":
-        document.execCommand("bold");
+      case 'bold':
+        document.execCommand('bold');
         break;
-      case "italic":
-        document.execCommand("italic");
+      case 'italic':
+        document.execCommand('italic');
         break;
-      case "underline":
-        document.execCommand("underline");
+      case 'underline':
+        document.execCommand('underline');
         break;
-      case "strike":
-        document.execCommand("strikeThrough");
+      case 'strike':
+        document.execCommand('strikeThrough');
         break;
-      case "code":
+      case 'code':
         this.toggleCode();
         break;
-      case "link":
+      case 'link':
         this.toggleLink();
         break;
     }
@@ -131,12 +131,12 @@ export class NativeAdapter implements EditorAdapter {
     const range = sel.getRangeAt(0);
     const parent = range.commonAncestorContainer.parentElement;
 
-    if (parent?.tagName === "CODE") {
+    if (parent?.tagName === 'CODE') {
       // unwrap
-      const text = document.createTextNode(parent.textContent ?? "");
+      const text = document.createTextNode(parent.textContent ?? '');
       parent.replaceWith(text);
     } else {
-      const code = document.createElement("code");
+      const code = document.createElement('code');
       code.appendChild(range.extractContents());
       range.insertNode(code);
       sel.removeAllRanges();
@@ -153,57 +153,60 @@ export class NativeAdapter implements EditorAdapter {
     const range = sel.getRangeAt(0);
     const parent = range.commonAncestorContainer.parentElement;
 
-    if (parent?.tagName === "A") {
-      document.execCommand("unlink");
+    if (parent?.tagName === 'A') {
+      document.execCommand('unlink');
     } else {
-      const url = window.prompt("Enter URL:");
-      if (url) document.execCommand("createLink", false, url);
+      const url = window.prompt('Enter URL:');
+      if (url) document.execCommand('createLink', false, url);
     }
   }
 
   private setBlock(block: Block): void {
-    if (block === "bulletList" || block === "orderedList") {
+    if (block === 'bulletList' || block === 'orderedList') {
       this.toggleList(block);
       return;
     }
 
-    if (block === "blockquote") {
+    if (block === 'blockquote') {
       this.toggleBlockquote();
       return;
     }
 
     const tag = BLOCK_TAG[block];
-    document.execCommand("formatBlock", false, tag);
+    document.execCommand('formatBlock', false, tag);
   }
 
-  private toggleList(block: "bulletList" | "orderedList"): void {
-    const cmd = block === "bulletList" ? "insertUnorderedList" : "insertOrderedList";
+  private toggleList(block: 'bulletList' | 'orderedList'): void {
+    const cmd = block === 'bulletList' ? 'insertUnorderedList' : 'insertOrderedList';
     document.execCommand(cmd);
   }
 
   private toggleBlockquote(): void {
     const current = this.getActiveBlock();
-    if (current === "blockquote") {
-      document.execCommand("formatBlock", false, "p");
+    if (current === 'blockquote') {
+      document.execCommand('formatBlock', false, 'p');
     } else {
-      document.execCommand("formatBlock", false, "blockquote");
+      document.execCommand('formatBlock', false, 'blockquote');
     }
   }
 
   private setAlign(align: Align): void {
     const cmd =
-      align === "left"    ? "justifyLeft"   :
-      align === "center"  ? "justifyCenter" :
-      align === "right"   ? "justifyRight"  :
-                            "justifyFull";
+      align === 'left'
+        ? 'justifyLeft'
+        : align === 'center'
+          ? 'justifyCenter'
+          : align === 'right'
+            ? 'justifyRight'
+            : 'justifyFull';
     document.execCommand(cmd);
   }
 
   private getActiveAlign(): Align {
-    if (document.queryCommandState("justifyCenter")) return "center";
-    if (document.queryCommandState("justifyRight"))  return "right";
-    if (document.queryCommandState("justifyFull"))   return "justify";
-    return "left";
+    if (document.queryCommandState('justifyCenter')) return 'center';
+    if (document.queryCommandState('justifyRight')) return 'right';
+    if (document.queryCommandState('justifyFull')) return 'justify';
+    return 'left';
   }
 
   private insertAtCursor(node: Node): void {
@@ -221,11 +224,11 @@ export class NativeAdapter implements EditorAdapter {
     sel.addRange(range);
   }
 
-  private insertImage(src: string, alt = ""): void {
-    const img = document.createElement("img");
+  private insertImage(src: string, alt = ''): void {
+    const img = document.createElement('img');
     img.src = src;
     img.alt = alt;
-    img.className = "vb-image";
+    img.className = 'vb-image';
     this.insertAtCursor(img);
   }
 
@@ -236,11 +239,11 @@ export class NativeAdapter implements EditorAdapter {
   }
 
   private insertFile(url: string, name: string, size: number): void {
-    const chip = document.createElement("a");
+    const chip = document.createElement('a');
     chip.href = url;
     chip.download = name;
-    chip.className = "vb-file-chip";
-    chip.contentEditable = "false";
+    chip.className = 'vb-file-chip';
+    chip.contentEditable = 'false';
     chip.innerHTML = `<span class="vb-file-chip-icon" aria-hidden="true">📎</span><span class="vb-file-chip-name">${name}</span><span class="vb-file-chip-size">${this.formatBytes(size)}</span>`;
     this.insertAtCursor(chip);
   }
@@ -263,18 +266,18 @@ export class NativeAdapter implements EditorAdapter {
 
   private isMarkActive(mark: Mark): boolean {
     switch (mark) {
-      case "bold":
-        return document.queryCommandState("bold");
-      case "italic":
-        return document.queryCommandState("italic");
-      case "underline":
-        return document.queryCommandState("underline");
-      case "strike":
-        return document.queryCommandState("strikeThrough");
-      case "code":
-        return this.isInsideTag("CODE");
-      case "link":
-        return this.isInsideTag("A");
+      case 'bold':
+        return document.queryCommandState('bold');
+      case 'italic':
+        return document.queryCommandState('italic');
+      case 'underline':
+        return document.queryCommandState('underline');
+      case 'strike':
+        return document.queryCommandState('strikeThrough');
+      case 'code':
+        return this.isInsideTag('CODE');
+      case 'link':
+        return this.isInsideTag('A');
     }
   }
 
@@ -313,7 +316,7 @@ export class NativeAdapter implements EditorAdapter {
     return {
       activeMarks,
       activeBlock,
-      activeAlign: inEditor ? this.getActiveAlign() : "left",
+      activeAlign: inEditor ? this.getActiveAlign() : 'left',
       canToggleMarks,
       canSetBlocks,
       canUndo: inEditor,

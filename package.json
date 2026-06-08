@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "editor:dev": "pnpm -C packages/editor dev",
     "web:dev": "pnpm -C apps/web dev",
     "web:build": "pnpm --filter @vabster/editor build && pnpm -C apps/web build",
@@ -17,6 +20,8 @@
   "license": "ISC",
   "packageManager": "pnpm@10.28.2",
   "devDependencies": {
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.3",
     "turbo": "^2.8.3",
     "typescript": "^5.9.3"
   }

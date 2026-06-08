@@ -1,1 +1,1 @@
-export * from "./HeadingOptionList";
+export * from './HeadingOptionList';

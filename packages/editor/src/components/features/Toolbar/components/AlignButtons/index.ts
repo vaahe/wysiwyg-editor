@@ -1,1 +1,1 @@
-export * from "./AlignButtons";
+export * from './AlignButtons';

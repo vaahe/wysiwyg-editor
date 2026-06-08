@@ -8,24 +8,12 @@
     "tsBuildInfoFile": "./node_modules/.cache/tsbuildinfo",
     "baseUrl": "./src",
     "paths": {
-      "@/*": [
-        "*"
-      ],
-      "@components": [
-        "components/*"
-      ],
-      "@core": [
-        "core/*"
-      ],
-      "@lib": [
-        "lib/*"
-      ],
-      "@utils": [
-        "utils/*"
-      ]
+      "@/*": ["*"],
+      "@components": ["components/*"],
+      "@core": ["core/*"],
+      "@lib": ["lib/*"],
+      "@utils": ["utils/*"]
     }
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

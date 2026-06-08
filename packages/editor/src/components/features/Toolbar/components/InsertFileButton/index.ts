@@ -1,1 +1,1 @@
-export * from "./InsertFileButton";
+export * from './InsertFileButton';

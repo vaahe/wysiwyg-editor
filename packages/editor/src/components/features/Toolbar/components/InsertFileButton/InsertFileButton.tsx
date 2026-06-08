@@ -1,6 +1,6 @@
-import { useRef, type FC } from "react";
-import { useEditorContext } from "../../../../../react-bindings";
-import { ToolbarButton } from "../../../../primitives/ToolbarButton/ToolbarButton";
+import { useRef, type FC } from 'react';
+import { useEditorContext } from '../../../../../react-bindings';
+import { ToolbarButton } from '../../../../primitives/ToolbarButton/ToolbarButton';
 
 export const InsertFileButton: FC = () => {
   const { exec, snapshot } = useEditorContext();
@@ -18,14 +18,14 @@ export const InsertFileButton: FC = () => {
     const reader = new FileReader();
     reader.onload = () => {
       exec({
-        type: "insertFile",
+        type: 'insertFile',
         url: reader.result as string,
         name: file.name,
         size: file.size,
       });
     };
     reader.readAsDataURL(file);
-    e.target.value = "";
+    e.target.value = '';
   };
 
   return (
@@ -36,12 +36,7 @@ export const InsertFileButton: FC = () => {
         onMouseDown={(e) => e.preventDefault()}
         onClick={handleClick}
       />
-      <input
-        ref={inputRef}
-        type="file"
-        style={{ display: "none" }}
-        onChange={handleChange}
-      />
+      <input ref={inputRef} type="file" style={{ display: 'none' }} onChange={handleChange} />
     </>
   );
 };

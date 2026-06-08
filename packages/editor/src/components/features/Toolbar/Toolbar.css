@@ -30,7 +30,9 @@
   font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
-  transition: background 0.1s, border-color 0.1s;
+  transition:
+    background 0.1s,
+    border-color 0.1s;
 }
 
 .vb-block-picker-trigger:hover:not(.is-disabled) {
