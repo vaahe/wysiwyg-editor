@@ -6,10 +6,10 @@ A lightweight WYSIWYG editor for React built on the native `contenteditable` API
 
 ## Packages
 
-| Package | Version | Description |
-|---|---|---|
+| Package                                | Version                                                                                               | Description         |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------- |
 | [`@vabster/editor`](./packages/editor) | [![npm](https://img.shields.io/npm/v/@vabster/editor)](https://www.npmjs.com/package/@vabster/editor) | Core editor library |
-| [`web`](./apps/web) | — | Demo app (Next.js) |
+| [`web`](./apps/web)                    | —                                                                                                     | Demo app (Next.js)  |
 
 ## Quick Start
 
@@ -18,8 +18,8 @@ npm install @vabster/editor
 ```
 
 ```tsx
-import { Editor, Toolbar } from "@vabster/editor";
-import "@vabster/editor/styles.css";
+import { Editor, Toolbar } from '@vabster/editor';
+import '@vabster/editor/styles.css';
 
 export default function App() {
   return (
