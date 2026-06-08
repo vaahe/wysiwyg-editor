@@ -1,0 +1,118 @@
+.vb-editor {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.vb-editor-content {
+  outline: none;
+  padding: 16px;
+  min-height: 200px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #111;
+}
+
+.vb-editor-content:empty::before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  pointer-events: none;
+}
+
+.vb-editor-content h1 { font-size: 2em; font-weight: 700; margin: 0.5em 0; }
+.vb-editor-content h2 { font-size: 1.5em; font-weight: 700; margin: 0.5em 0; }
+.vb-editor-content h3 { font-size: 1.25em; font-weight: 700; margin: 0.5em 0; }
+.vb-editor-content h4 { font-size: 1em; font-weight: 700; margin: 0.5em 0; }
+.vb-editor-content h5 { font-size: 0.875em; font-weight: 700; margin: 0.5em 0; }
+.vb-editor-content h6 { font-size: 0.75em; font-weight: 700; margin: 0.5em 0; }
+.vb-editor-content p  { margin: 0.5em 0; }
+
+.vb-editor-content ul { list-style: disc; padding-left: 1.5em; margin: 0.5em 0; }
+.vb-editor-content ol { list-style: decimal; padding-left: 1.5em; margin: 0.5em 0; }
+
+.vb-editor-content blockquote {
+  border-left: 3px solid #e5e5e5;
+  margin: 0.5em 0;
+  padding: 4px 16px;
+  color: #555;
+}
+
+.vb-editor-content code {
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.vb-editor-content a {
+  color: #0070f3;
+  text-decoration: underline;
+}
+
+/* ── Images ────────────────────────────────────────────────────────────────── */
+
+.vb-editor-content .vb-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 8px 0;
+  cursor: default;
+}
+
+/* ── File chips ─────────────────────────────────────────────────────────────── */
+
+.vb-file-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  background: #fafafa;
+  color: #111;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  vertical-align: middle;
+  margin: 0 2px;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.vb-file-chip:hover {
+  background: #f0f0f0;
+  border-color: #d0d0d0;
+}
+
+.vb-file-chip-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.vb-file-chip-name {
+  font-weight: 500;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vb-file-chip-size {
+  color: #888;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Toolbar inside editor sits on top with a bottom border */
+.vb-editor > .vb-toolbar-wrapper {
+  border-bottom: 1px solid #e5e5e5;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}

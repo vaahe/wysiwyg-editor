@@ -1,2 +1,5 @@
 @import "../src/components/features/BubbleMenu/BubbleMenu.css";
 @import "../src/components/primitives/ToolbarButton/ToolbarButton.css";
+@import "../src/components/features/Toolbar/Toolbar.css";
+@import "../src/components/features/Toolbar/components/HeadingOptionItem/HeadingOptionItem.css";
+@import "../src/components/Editor/Editor.css";
