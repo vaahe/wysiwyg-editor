@@ -12,44 +12,61 @@ export type HeadingOption = {
 };
 
 const headingOptions: HeadingOption[] = [
-  { value: "p", label: "Paragraph" },
+  { value: "p",  label: "Paragraph" },
   { value: "h1", label: "Heading 1" },
   { value: "h2", label: "Heading 2" },
-  { value: 'h3', label: "Heading 3" },
-  { value: 'h4', label: "Heading 4" },
+  { value: "h3", label: "Heading 3" },
+  { value: "h4", label: "Heading 4" },
   { value: "h5", label: "Heading 5" },
   { value: "h6", label: "Heading 6" },
 ];
+
+const LABEL_BY_VALUE: Record<HeadingValue, string> = {
+  p:  "Paragraph",
+  h1: "Heading 1",
+  h2: "Heading 2",
+  h3: "Heading 3",
+  h4: "Heading 4",
+  h5: "Heading 5",
+  h6: "Heading 6",
+};
+
+const headingValueByBlock: Partial<Record<Block, HeadingValue>> = {
+  paragraph: "p",
+  heading1:  "h1",
+  heading2:  "h2",
+  heading3:  "h3",
+  heading4:  "h4",
+  heading5:  "h5",
+  heading6:  "h6",
+};
+
+const blockByHeadingValue: Record<HeadingValue, Block> = {
+  p:  "paragraph",
+  h1: "heading1",
+  h2: "heading2",
+  h3: "heading3",
+  h4: "heading4",
+  h5: "heading5",
+  h6: "heading6",
+};
 
 type Props = {
   onChange?: (v: HeadingValue) => void;
   options?: HeadingOption[];
 };
 
-const headingValueByBlock: Partial<Record<Block, HeadingValue>> = {
-  paragraph: "p",
-  heading1: "h1",
-  heading2: "h2",
-  heading3: "h3",
-  heading4: "h4",
-  heading5: "h5",
-  heading6: "h6",
-};
-
 export const HeadingsDropdown: FC<Props> = ({ onChange, options = headingOptions }) => {
-  const { exec, snapshot } = useEditorContext();
-  const current = snapshot.activeBlock ? headingValueByBlock[snapshot.activeBlock] ?? "p" : "p";
+  const { exec, can, snapshot } = useEditorContext();
+  const current: HeadingValue = snapshot.activeBlock
+    ? (headingValueByBlock[snapshot.activeBlock] ?? "p")
+    : "p";
 
+  const disabled = !can({ type: "setBlock", block: "paragraph" });
   const [open, setOpen] = useState(false);
 
   const handleSelect = (v: HeadingValue) => {
-    if (v === "p") exec({ type: "setBlock", block: "paragraph" });
-    if (v === "h1") exec({ type: "setBlock", block: "heading1" });
-    if (v === "h2") exec({ type: "setBlock", block: "heading2" });
-    if (v === "h3") exec({ type: "setBlock", block: "heading3" });
-    if (v === "h4") exec({ type: "setBlock", block: "heading4" });
-    if (v === "h5") exec({ type: "setBlock", block: "heading5" });
-    if (v === "h6") exec({ type: "setBlock", block: "heading6" });
+    exec({ type: "setBlock", block: blockByHeadingValue[v] });
     onChange?.(v);
     setOpen(false);
   };
@@ -58,21 +75,28 @@ export const HeadingsDropdown: FC<Props> = ({ onChange, options = headingOptions
     <div style={{ position: "relative" }}>
       <button
         type="button"
+        className={`vb-block-picker-trigger${disabled ? " is-disabled" : ""}${open ? " is-open" : ""}`}
+        disabled={disabled}
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => setOpen((o) => !o)}
-        style={{
-          padding: "6px 10px",
-          border: "1px solid #e5e5e5",
-          borderRadius: 8,
-          background: "white",
-          cursor: "pointer",
-        }}
+        aria-haspopup="listbox"
+        aria-expanded={open}
       >
-        {current.toUpperCase()}
+        <span className="vb-block-picker-label">{LABEL_BY_VALUE[current]}</span>
+        <svg
+          className="vb-block-picker-chevron"
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </button>
 
       <BubbleMenu open={open} onClose={() => setOpen(false)}>
-        <HeadingOptionList options={options} onSelect={handleSelect} />
+        <HeadingOptionList options={options} current={current} onSelect={handleSelect} />
       </BubbleMenu>
     </div>
   );

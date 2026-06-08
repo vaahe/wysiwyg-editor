@@ -1,6 +1,6 @@
 import { useEditorContext } from "../../../react-bindings";
 import { ToolbarButton } from "../../primitives/ToolbarButton/ToolbarButton";
-import { HeadingsDropdown } from "./components";
+import { HeadingsDropdown, InsertImageButton, InsertFileButton, AlignButtons } from "./components";
 
 type ToolbarProps = {
   className?: string;
@@ -10,10 +10,7 @@ export function Toolbar({ className }: ToolbarProps) {
   const { exec, can, activeMark, activeBlock } = useEditorContext();
 
   return (
-    <div
-      className={className}
-      style={{ display: "flex", gap: 8, flexWrap: "wrap", padding: 8, border: "1px solid #e5e5e5", borderRadius: 12 }}
-    >
+    <div className={`vb-toolbar${className ? ` ${className}` : ""}`}>
       <HeadingsDropdown />
       <ToolbarButton
         label="B"
@@ -69,8 +66,17 @@ export function Toolbar({ className }: ToolbarProps) {
 
       <div style={{ width: 1, background: "#e5e5e5", margin: "0 4px" }} />
 
+      <AlignButtons />
+
+      <div style={{ width: 1, background: "#e5e5e5", margin: "0 4px" }} />
+
       <ToolbarButton label="Undo" disabled={!can({ type: "undo" })} onClick={() => exec({ type: "undo" })} />
       <ToolbarButton label="Redo" disabled={!can({ type: "redo" })} onClick={() => exec({ type: "redo" })} />
+
+      <div style={{ width: 1, background: "#e5e5e5", margin: "0 4px" }} />
+
+      <InsertImageButton />
+      <InsertFileButton />
     </div>
   );
 }
