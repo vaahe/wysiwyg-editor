@@ -7,7 +7,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import type { Block, Command, EditorAdapter, EditorSnapshot, Mark } from "../../core";
+import type { Align, Block, Command, EditorAdapter, EditorSnapshot, Mark } from "../../core";
 
 export type EditorContextValue = {
   editor: EditorAdapter | null;
@@ -16,6 +16,7 @@ export type EditorContextValue = {
   can: (command: Command) => boolean;
   activeMark: (mark: Mark) => boolean;
   activeBlock: (block: Block) => boolean;
+  activeAlign: (align: Align) => boolean;
 };
 
 const EditorContext = createContext<EditorContextValue | null>(null);
@@ -23,6 +24,7 @@ const EditorContext = createContext<EditorContextValue | null>(null);
 const EMPTY_SNAPSHOT: EditorSnapshot = {
   activeMarks: [],
   activeBlock: null,
+  activeAlign: "left",
   canToggleMarks: [],
   canSetBlocks: [],
   canUndo: false,
@@ -55,6 +57,7 @@ function arraysEqual<T>(left: T[], right: T[]) {
 function snapshotsEqual(left: EditorSnapshot, right: EditorSnapshot) {
   return (
     left.activeBlock === right.activeBlock &&
+    left.activeAlign === right.activeAlign &&
     left.canUndo === right.canUndo &&
     left.canRedo === right.canRedo &&
     arraysEqual(left.activeMarks, right.activeMarks) &&
@@ -109,6 +112,7 @@ export function EditorProvider({ editor, children }: EditorProviderProps) {
       can: (command) => canExecute(snapshot, command),
       activeMark: (mark) => snapshot.activeMarks.includes(mark),
       activeBlock: (block) => snapshot.activeBlock === block,
+      activeAlign: (align) => snapshot.activeAlign === align,
     }),
     [editor, exec, snapshot],
   );
