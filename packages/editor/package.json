@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "license": "ISC",
-  "author": "vabanik",
+  "author": "vabster",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -14,19 +14,22 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": {
+      "types": "./dist/styles.css.d.ts",
+      "default": "./dist/styles.css"
+    }
   },
   "files": [
     "dist"
   ],
-  "sideEffects": false,
+  "sideEffects": ["./dist/styles.css"],
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18"
   },
   "scripts": {
     "build": "tsup && pnpm build:css",
-    "build:css": "postcss styles/index.css -o dist/styles.css",
+    "build:css": "postcss styles/index.css -o dist/styles.css && echo \"declare const styles: never;\\nexport default styles;\" > dist/styles.css.d.ts",
     "dev": "concurrently -k \"tsup --watch\" \"pnpm dev:css\"",
     "dev:css": "postcss styles/index.css -o dist/styles.css --watch",
     "typecheck": "tsc -p tsconfig.json --noEmit",
