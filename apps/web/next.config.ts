@@ -1,9 +1,8 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   output: 'export',
-  basePath: '/wysiwyg-editor',
+  basePath: process.env.NODE_ENV === 'production' ? '/wysiwyg-editor' : '',
   images: { unoptimized: true },
   reactCompiler: true,
 };
