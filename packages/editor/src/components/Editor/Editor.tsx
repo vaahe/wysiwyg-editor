@@ -7,9 +7,10 @@ type EditorProps = {
   defaultValue?: string;
   placeholder?: string;
   children?: ReactNode;
+  sidebar?: ReactNode;
 };
 
-export function Editor({ className, defaultValue, placeholder, children }: EditorProps) {
+export function Editor({ className, defaultValue, placeholder, children, sidebar }: EditorProps) {
   const elRef = useRef<HTMLDivElement | null>(null);
   const [adapter, setAdapter] = useState<NativeAdapter | null>(null);
 
@@ -22,16 +23,19 @@ export function Editor({ className, defaultValue, placeholder, children }: Edito
 
   return (
     <EditorProvider editor={adapter}>
-      <div className={`vb-editor${className ? ` ${className}` : ''}`}>
-        {children}
-        <div
-          ref={elRef}
-          contentEditable
-          suppressContentEditableWarning
-          className="vb-editor-content"
-          data-placeholder={placeholder ?? 'Start writing…'}
-          dangerouslySetInnerHTML={defaultValue ? { __html: defaultValue } : undefined}
-        />
+      <div className={`vb-editor-wrapper${sidebar ? ' vb-editor-wrapper--with-sidebar' : ''}`}>
+        <div className={`vb-editor${className ? ` ${className}` : ''}`}>
+          {children}
+          <div
+            ref={elRef}
+            contentEditable
+            suppressContentEditableWarning
+            className="vb-editor-content"
+            data-placeholder={placeholder ?? 'Start writing…'}
+            dangerouslySetInnerHTML={defaultValue ? { __html: defaultValue } : undefined}
+          />
+        </div>
+        {sidebar && <div className="vb-editor-sidebar">{sidebar}</div>}
       </div>
     </EditorProvider>
   );

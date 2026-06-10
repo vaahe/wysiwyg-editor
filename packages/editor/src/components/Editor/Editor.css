@@ -1,3 +1,23 @@
+.vb-editor-wrapper {
+  display: contents;
+}
+
+.vb-editor-wrapper--with-sidebar {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.vb-editor-wrapper--with-sidebar .vb-editor {
+  flex: 1;
+  min-width: 0;
+}
+
+.vb-editor-sidebar {
+  width: 320px;
+  flex-shrink: 0;
+}
+
 .vb-editor {
   display: flex;
   flex-direction: column;
