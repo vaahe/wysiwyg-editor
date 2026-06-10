@@ -60,9 +60,7 @@ function HTMLPanel() {
 function EditorSection() {
   return (
     <>
-      <p className="mb-3 text-xs font-medium uppercase tracking-widest text-zinc-400">
-        Try it out
-      </p>
+      <p className="mb-3 text-xs font-medium uppercase tracking-widest text-zinc-400">Try it out</p>
       <Editor placeholder="Start writing…" sidebar={<HTMLPanel />}>
         <Toolbar />
       </Editor>
