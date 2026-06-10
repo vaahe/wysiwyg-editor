@@ -29,13 +29,13 @@ export default function App() {
 
 The root component. Renders a `contenteditable` region and provides editor context to all children.
 
-| Prop           | Type        | Default | Description                              |
-| -------------- | ----------- | ------- | ---------------------------------------- |
-| `placeholder`  | `string`    | `""`    | Placeholder text when empty              |
-| `defaultValue` | `string`    | —       | Initial HTML content to load             |
-| `children`     | `ReactNode` | —       | Toolbar, BubbleMenu, or custom UI        |
-| `sidebar`      | `ReactNode` | —       | Content rendered in a panel beside it    |
-| `className`    | `string`    | —       | Extra class on the editor container      |
+| Prop           | Type        | Default | Description                           |
+| -------------- | ----------- | ------- | ------------------------------------- |
+| `placeholder`  | `string`    | `""`    | Placeholder text when empty           |
+| `defaultValue` | `string`    | —       | Initial HTML content to load          |
+| `children`     | `ReactNode` | —       | Toolbar, BubbleMenu, or custom UI     |
+| `sidebar`      | `ReactNode` | —       | Content rendered in a panel beside it |
+| `className`    | `string`    | —       | Extra class on the editor container   |
 
 ### `<Toolbar>`
 
