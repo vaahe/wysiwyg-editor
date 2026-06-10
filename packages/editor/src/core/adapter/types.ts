@@ -37,5 +37,6 @@ export interface EditorAdapter {
   focus(): void;
   execute(command: Command): void;
   getSnapshot(): EditorSnapshot;
+  getHTML(): string;
   subscribe(listener: () => void): () => void;
 }

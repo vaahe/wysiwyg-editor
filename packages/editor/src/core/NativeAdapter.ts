@@ -57,6 +57,10 @@ export class NativeAdapter implements EditorAdapter {
     return this.snapshot;
   }
 
+  getHTML(): string {
+    return this.el.innerHTML;
+  }
+
   execute(command: Command): void {
     this.el.focus();
 
