@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Editor, Toolbar } from '@vabster/editor';
+import { Editor, Toolbar, useEditorHTML } from '@vabster/editor';
 
 const NPM_COMMAND = 'npm install @vabster/editor';
 
@@ -42,6 +42,31 @@ function CopyButton() {
         </svg>
       )}
     </button>
+  );
+}
+
+function HTMLPanel() {
+  const html = useEditorHTML();
+  return (
+    <div className="flex w-full flex-col gap-2 lg:w-80 lg:shrink-0">
+      <p className="text-xs font-medium uppercase tracking-widest text-zinc-400">HTML output</p>
+      <pre className="min-h-48 overflow-auto rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-xs leading-relaxed text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
+        {html || <span className="text-zinc-400">Start typing to see HTML…</span>}
+      </pre>
+    </div>
+  );
+}
+
+function EditorSection() {
+  return (
+    <>
+      <p className="mb-3 text-xs font-medium uppercase tracking-widest text-zinc-400">
+        Try it out
+      </p>
+      <Editor placeholder="Start writing…" sidebar={<HTMLPanel />}>
+        <Toolbar />
+      </Editor>
+    </>
   );
 }
 
@@ -106,13 +131,8 @@ export default function Home() {
 
       {/* Editor demo */}
       <main className="flex flex-1 justify-center px-6 py-12">
-        <div className="w-full max-w-3xl">
-          <p className="mb-3 text-xs font-medium text-zinc-400 uppercase tracking-widest">
-            Try it out
-          </p>
-          <Editor placeholder="Start writing…">
-            <Toolbar />
-          </Editor>
+        <div className="w-full max-w-6xl">
+          <EditorSection />
         </div>
       </main>
 
