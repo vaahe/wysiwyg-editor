@@ -1,7 +1,27 @@
 {
   "name": "@vabster/editor",
-  "version": "0.0.3",
-  "description": "",
+  "version": "0.0.4",
+  "description": "A lightweight WYSIWYG rich text editor for React built on the native contenteditable API — no heavy dependencies.",
+  "keywords": [
+    "wysiwyg",
+    "editor",
+    "rich-text",
+    "rich-text-editor",
+    "react",
+    "contenteditable",
+    "text-editor",
+    "html-editor",
+    "toolbar"
+  ],
+  "homepage": "https://vaahe.github.io/wysiwyg-editor",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaahe/wysiwyg-editor.git",
+    "directory": "packages/editor"
+  },
+  "bugs": {
+    "url": "https://github.com/vaahe/wysiwyg-editor/issues"
+  },
   "license": "ISC",
   "author": "vabster",
   "type": "module",
