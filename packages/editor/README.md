@@ -29,10 +29,13 @@ export default function App() {
 
 The root component. Renders a `contenteditable` region and provides editor context to all children.
 
-| Prop          | Type        | Default | Description                       |
-| ------------- | ----------- | ------- | --------------------------------- |
-| `placeholder` | `string`    | `""`    | Placeholder text when empty       |
-| `children`    | `ReactNode` | —       | Toolbar, BubbleMenu, or custom UI |
+| Prop           | Type        | Default | Description                              |
+| -------------- | ----------- | ------- | ---------------------------------------- |
+| `placeholder`  | `string`    | `""`    | Placeholder text when empty              |
+| `defaultValue` | `string`    | —       | Initial HTML content to load             |
+| `children`     | `ReactNode` | —       | Toolbar, BubbleMenu, or custom UI        |
+| `sidebar`      | `ReactNode` | —       | Content rendered in a panel beside it    |
+| `className`    | `string`    | —       | Extra class on the editor container      |
 
 ### `<Toolbar>`
 
@@ -98,6 +101,79 @@ exec({ type: 'redo' });
 **Blocks:** `paragraph` | `heading1`–`heading6` | `bulletList` | `orderedList` | `blockquote`
 
 **Align:** `left` | `center` | `right` | `justify`
+
+## Saving & Rendering Content
+
+The editor stores content as plain HTML, so persisting a post is just storing a string.
+
+### Getting the HTML
+
+**Reactively** with the `useEditorHTML()` hook — updates as the user types:
+
+```tsx
+import { Editor, Toolbar, useEditorHTML } from '@vabster/editor';
+
+function SaveButton() {
+  const html = useEditorHTML();
+
+  const handleSave = async () => {
+    await fetch('/api/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: html }),
+    });
+  };
+
+  return <button onClick={handleSave}>Save</button>;
+}
+
+function PostEditor() {
+  return (
+    <Editor placeholder="Write your post…">
+      <Toolbar />
+      <SaveButton />
+    </Editor>
+  );
+}
+```
+
+**On demand** with `editor.getHTML()` — no re-renders, read only when you need it:
+
+```tsx
+import { useEditorContext } from '@vabster/editor';
+
+function SaveButton() {
+  const { editor } = useEditorContext();
+  const handleSave = () => savePost(editor?.getHTML() ?? '');
+  return <button onClick={handleSave}>Save</button>;
+}
+```
+
+### Rendering stored content
+
+Display a saved post:
+
+```tsx
+<div dangerouslySetInnerHTML={{ __html: post.content }} />
+```
+
+Or load it back into the editor for editing via `defaultValue`:
+
+```tsx
+<Editor defaultValue={post.content}>
+  <Toolbar />
+</Editor>
+```
+
+> **⚠️ Sanitize before storing or rendering.** HTML from a rich text editor can
+> contain malicious markup (e.g. pasted `<script>` tags or `onerror` attributes).
+> The editor does not sanitize for you. Run the HTML through a sanitizer such as
+> [DOMPurify](https://github.com/cure53/DOMPurify) before persisting or rendering:
+>
+> ```ts
+> import DOMPurify from 'dompurify';
+> const clean = DOMPurify.sanitize(html);
+> ```
 
 ## Custom Adapter
 
