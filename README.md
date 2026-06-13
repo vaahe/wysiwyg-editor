@@ -46,7 +46,7 @@ pnpm editor:dev
 # Run the demo app
 pnpm web:dev
 
-# Build everything
+# Build
 pnpm web:build
 ```
 
